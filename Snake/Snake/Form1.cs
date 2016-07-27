@@ -30,19 +30,20 @@ namespace Snake
         //int length;
         //int score;
 
-        //player 1, Up Down Left Right
-        Snake mysnake = new Snake(Color.Black);
-        //Player 2, W S A D
-        Snake mysnake2 = new Snake(Color.Red);
-         
+
 
         Color clearColor = Color.OliveDrab;
         SolidBrush clearBrush = new SolidBrush(Color.OliveDrab);
         SolidBrush appleBrush = new SolidBrush(Color.Red);
+
+
+        Boolean twoplay = false;
+        //player 1, Up Down Left Right
+        Snake mysnake = new Snake(Color.Black);
+        //Player 2, W S A D
+        Snake mysnake2 = new Snake(Color.Red);
+        int speed = 10;
         
-
-
-
         List<Point> apples = new List<Point>();
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -59,13 +60,18 @@ namespace Snake
             mysnake.Add(new Point(320, 200));
             mysnake.setDir("u");
             //mysnake.move();
-
-            mysnake2.Clear();
-            mysnake2.Add(new Point(100, 200));
-            mysnake2.Add(new Point(110, 200));
-            mysnake2.Add(new Point(120, 200));
-            mysnake2.setDir("u");
-
+            if (twoplay) {
+                mysnake2.Clear();
+                mysnake2.Add(new Point(100, 200));
+                mysnake2.Add(new Point(110, 200));
+                mysnake2.Add(new Point(120, 200));
+                mysnake2.setDir("u");
+            }
+            else
+            {
+                mysnake2.Clear();
+                mysnake2.Add(new Point(-10, -10));
+            }
             //score = 0;
             //length = (score + 4) * 3;
             apples.Clear();
@@ -81,39 +87,18 @@ namespace Snake
         //for key movement
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Up)
-            {
-                mysnake.setDir("u");
-            }
-            if (e.KeyCode == Keys.Down)
-            {
-                mysnake.setDir("d");
-            }
-            if (e.KeyCode == Keys.Left)
-            {
-                mysnake.setDir("l");
-            }
-            if (e.KeyCode == Keys.Right)
-            {
-                mysnake.setDir("r");
-            }
+            if (e.KeyCode == Keys.Up)   {mysnake.setDir("u");}
+            if (e.KeyCode == Keys.Down) {mysnake.setDir("d");}
+            if (e.KeyCode == Keys.Left) {mysnake.setDir("l");}
+            if (e.KeyCode == Keys.Right){mysnake.setDir("r");}
 
-            //snake2
-            if (e.KeyCode == Keys.W)
+            if (twoplay)
             {
-                mysnake2.setDir("u");
-            }
-            if (e.KeyCode == Keys.S)
-            {
-                mysnake2.setDir("d");
-            }
-            if (e.KeyCode == Keys.A)
-            {
-                mysnake2.setDir("l");
-            }
-            if (e.KeyCode == Keys.D)
-            {
-                mysnake2.setDir("r");
+                //snake2
+                if (e.KeyCode == Keys.W){mysnake2.setDir("u");}
+                if (e.KeyCode == Keys.S){mysnake2.setDir("d");}
+                if (e.KeyCode == Keys.A){mysnake2.setDir("l");}
+                if (e.KeyCode == Keys.D){mysnake2.setDir("r");}
             }
         }
 
@@ -132,8 +117,6 @@ namespace Snake
 
             mysnake.move(g);
             mysnake.draw(g);
-            mysnake2.move(g);
-            mysnake2.draw(g);
             //apple collision
             if (checkApple(currentHead))
             {
@@ -141,10 +124,15 @@ namespace Snake
                 spawnApple();
             }
 
-            if (checkApple(currentHead2))
+            if (twoplay)
             {
-                mysnake2.addScore();
-                spawnApple();
+                mysnake2.move(g);
+                mysnake2.draw(g);
+                if (checkApple(currentHead2))
+                {
+                    mysnake2.addScore();
+                    spawnApple();
+                }
             }
 
             //running into itself or leaving the border
@@ -157,13 +145,16 @@ namespace Snake
 
             }
 
-            if (mysnake2.checkCollision(currentHead2, mysnake))
+            if (twoplay)
             {
-                //dead snake!
-                snakeTimer.Stop();
-                appleTimer.Stop();
-                MessageBox.Show("Game Over", "Player 1 Wins");
+                if (mysnake2.checkCollision(currentHead2, mysnake))
+                {
+                    //dead snake!
+                    snakeTimer.Stop();
+                    appleTimer.Stop();
+                    MessageBox.Show("Game Over", "Player 1 Wins");
 
+                }
             }
 
             //changes the length - this makes it dependent on the score
@@ -177,13 +168,15 @@ namespace Snake
                 g.FillRectangle(clearBrush, snakeEnd.X, snakeEnd.Y, 10, 10);
             }
 
-            if (!checkApple(mysnake2.snakePoint(mysnake2.Count() - 1)))
+            if (twoplay)
             {
-                Point snakeEnd2 = mysnake2.snakePoint(0);
-                mysnake2.RemoveAt(0);
-                g.FillRectangle(clearBrush, snakeEnd2.X, snakeEnd2.Y, 10, 10);
+                if (!checkApple(mysnake2.snakePoint(mysnake2.Count() - 1)))
+                {
+                    Point snakeEnd2 = mysnake2.snakePoint(0);
+                    mysnake2.RemoveAt(0);
+                    g.FillRectangle(clearBrush, snakeEnd2.X, snakeEnd2.Y, 10, 10);
+                }
             }
-
 
             //draws apples
             foreach (Point p in apples)
@@ -191,9 +184,22 @@ namespace Snake
                 g.FillEllipse(appleBrush, p.X, p.Y, 10, 10);
             }
 
-            //shows score in corner
-            labelScore1.Text = "Snake 1 Score = " + mysnake.returnScore().ToString();
-            labelScore2.Text = "Snake 2 Score = " + mysnake2.returnScore().ToString();
+            // Random Trail Colour creation
+            // Snake colour is still in colour class
+
+            //Random r = new Random();
+            //Color c = Color.FromArgb(255, r.Next(255), r.Next(255), r.Next(255));
+            //clearBrush.Color = c;
+
+
+            labelScore.Text = "Black: " + mysnake.returnScore().ToString() + " points ";
+            if (twoplay)
+            {
+                labelScore.Text = labelScore.Text + " --- Red: " + mysnake2.returnScore().ToString() + " points";
+            }
+            //shows score in corner (removed)
+            //labelScore1.Text = "Snake 1 Score = " + mysnake.returnScore().ToString();
+            //labelScore2.Text = "Snake 2 Score = " + mysnake2.returnScore().ToString();
         }
 
         
@@ -251,11 +257,11 @@ namespace Snake
 
         private void appleTimer_Tick(object sender, EventArgs e)
         {
-            //spawnApple();
+         //   spawnApple();
         }
-        private void Form1_Load(object sender, EventArgs e)
-        { }
-
-
+        private void Form1_Load(object sender, EventArgs e)                             { }
+        private void onePlayerToolStripMenuItem_Click(object sender, EventArgs e)       {twoplay = false;}
+        private void twoPlayerWASDToolStripMenuItem_Click(object sender, EventArgs e)   {twoplay = true;}
+        private void toolStripSplitButton1_ButtonClick(object sender, EventArgs e)      {}
     }
 }
