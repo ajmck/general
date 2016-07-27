@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="Pushing_Your_Buttons.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Pushing_Your_Buttons"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Back" Label="Return to Game" x:Name="BackButton" Tapped="BackButton_Tapped"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            
+            <ColumnDefinition Width ="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Pushing Your Buttons" FontSize="30" Margin ="10"/>
+        <TextBlock Text="Game Mode" FontSize="20" Grid.Row="1" Margin="20,0,0,0"/>
+            
+        <RadioButton x:Name="RadioButton_Zen" Grid.Row="2" Grid.Column="0" Content="Zen Mode" Checked="RadioButton_Zen_Checked" Margin="20,0,0,0"/>
+        <RadioButton x:Name="RadioButton_Timed" Grid.Row="3" Grid.Column="0" Content="Timed" Checked="RadioButton_Timed_Checked" Margin="20,0,0,0"/>
+        <RadioButton x:Name="RadioButton_Challenge" Grid.Row="4" Grid.Column="0" Content="Challenge Mode" Checked="RadioButton_Challenge_Checked" Margin="20,0,0,0"/>
+
+        <TextBlock Text="Created by Alex McKirdy, for Microsoft Student Accelerator 2015" FontSize="20" Grid.Row="5" Margin="20" TextWrapping="Wrap" TextAlignment="Center"/>
+
+
+    </Grid>
+</Page>

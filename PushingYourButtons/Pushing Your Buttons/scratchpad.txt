@@ -1,0 +1,118 @@
+﻿/*  
+            if (localSettings.Values["selectedGameMode"] == null)
+            {
+                localSettings.Values["selectedGameMode"] = ValidGameMode.Zen;
+                selected_game_mode = ValidGameMode.Zen;
+            }
+            else
+            {
+                selected_game_mode = (ValidGameMode) localSettings.Values["selectetGameMode"];
+
+            }
+*/
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+
+
+     /*   public ValidGameMode RetriveGameMode()
+        {
+            int temp = (int) localSettings.Values["selectedGameMode"];
+            switch (temp)
+            {
+                default:
+                    return ValidGameMode.Zen;
+            }
+        }
+
+        public void StoreGameMode(ValidGameMode gm)
+        {
+            selected_game_mode = gm;
+            switch (gm)
+            {
+                case ValidGameMode.Zen:
+                    localSettings.Values["selectedGameMode"] = 0;
+                    break;
+                case ValidGameMode.Timed:
+                    localSettings.Values["selectedGameMode"] = 1;
+                    break;
+                case ValidGameMode.Challenge:
+                    localSettings.Values["selectedGameMode"] = 2;
+                    break;
+                default:
+                    localSettings.Values["selectedGameMode"] = 0;
+                    break;
+
+            }
+        }*/
+
+
+		//private int highscore_zen;
+        //private int highscore_timed;
+        //private int highscore_challenge_buttonpresses; //as time is also measured in challenge mode
+
+////////////////////////////////////////////////////////////////////
+//////////////////// Margin changing code //////////////////////////
+////////////////////////////////////////////////////////////////////
+
+            //change the margin, so the button doesn't remain completely within the grid
+            //but, make sure that it won't spill over the edge
+            int xMargin = 0;
+            int yMargin = 0;
+            int marginExtent = 50;
+
+            if (Grid.GetColumn(GameButton) == 0)
+            {
+                // button in leftmost column
+                xMargin = rand.Next(0, marginExtent);
+            }
+            else if (Grid.GetColumn(GameButton) == columns)
+            {
+                //button at rightmost column
+                xMargin = rand.Next(-marginExtent, 0);
+            }
+            else
+            {
+                //can be + or - change
+                xMargin = rand.Next(-marginExtent, marginExtent);
+            }
+
+            //and rows
+            if (Grid.GetRow(GameButton) == 0)
+            {
+                // button at top
+                yMargin = rand.Next(0, marginExtent);
+            }
+            else if (Grid.GetRow(GameButton) == columns)
+            {
+                //button at bottom
+                yMargin = rand.Next(-marginExtent, 0);
+            }
+            else
+            {
+                //can be + or - change
+                yMargin = rand.Next(-marginExtent, marginExtent);
+            }
+
+            GameButton.Margin = new Thickness(xMargin, yMargin, 0, 0);
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+////////////////////////////// button_tapped //////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+       /*private void GameButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            // allegedly, button_tapped is supposed to replace click
+            // but, it didn't work with clickmode
+
+            
+            //try making it GameButton_Pressed etc at a later point
+            ButtonHit();
+        }
+        */

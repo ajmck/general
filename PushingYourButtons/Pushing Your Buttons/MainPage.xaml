@@ -1,0 +1,75 @@
+﻿<Page
+    x:Class="Pushing_Your_Buttons.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Pushing_Your_Buttons"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+
+    
+    
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,0,0" x:Name="GameGrid">
+        <!-- bottom margin set so commandbar doesn't cover game -->
+        <Grid.Resources>
+            <!-- Resharper used to convert button properties to a style, to try and fix issues with the button background.
+                    (it worked, btw)
+            
+                    This way, the default transition to the pressed state doesn't slow the game down -->
+            <Style x:Key="RefactoredButtonStyle" TargetType="Button">
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="ClickMode" Value="Press" />
+                <Setter Property="IsRightTapEnabled" Value="False" />
+                <Setter Property="IsHoldingEnabled" Value="False" />
+                <Setter Property="IsDoubleTapEnabled" Value="False" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <!-- end resharper generated code -->
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="40"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" /><!-- to avoid commandbar -->
+            
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="LabelSeconds" Text="60.0s" Visibility="Visible" FontSize="20" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" />
+        <!--TextBlock x:Name="LabelPresses" Text="0" Visibility="Visible" FontSize="20" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2" /  NO LONGER USED-->
+        <Button x:Name="GameButton" Background="Aqua" Grid.Column="1" Grid.Row="3" Foreground="#FFFF0000" Click="GameButton_Click" Style="{StaticResource RefactoredButtonStyle}" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <CompositeTransform Rotation="0" x:Name="GameButtonRotation"/>
+            </Button.RenderTransform>
+        </Button>
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar VerticalAlignment="Bottom">
+            <AppBarButton Icon="Play" Label="New Game" x:Name="command_bar_btn_newgame" Click="command_bar_btn_newgame_Click"/>
+            <AppBarButton Icon="Setting" Label="Settings" x:Name="command_ber_btn_settings" Click="command_ber_btn_settings_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+</Page>
+
