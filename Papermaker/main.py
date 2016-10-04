@@ -23,14 +23,14 @@ def create(points, color=None):
     draw = ImageDraw.Draw(img)
 
     for p in points:
-        draw.polygon(p, modify_hsl(h, s, l))
+        draw.polygon(p, modify_hsl(h, s, l, factor=15))
     # img.show
     img.save(str(datetime.datetime.now()) + ".PNG", "PNG")
 
 
 def __main__():
     for i in range(10):
-        create(gen_squareangles(), color=(random.randint(0, 360), random.randint(0, 100), random.randint(0, 25)))
+        create(gen_squareangles(size), random_hsl() )
         print (i)
 
 

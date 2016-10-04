@@ -8,7 +8,7 @@ def hsl(hue, saturation, lightness):
     Not totally necessary, but I'm used to how Color works in C# / .Net
     :param hue: Hue (0-360)
     :param saturation: Saturation (0-100)
-    :param lightness: lightness (0 being darkest, 100 being lightest, 50 being standard)
+    :param lightness: lightness (0 being darkest, 100 being lightest)
     :return string of HSL value used by Pillow:
     """
     return "hsl({},{}%,{}%)".format(hue, saturation, lightness)
@@ -23,7 +23,7 @@ def modify_hsl(hue, saturation, lightness, factor=25):
     :param factor: Maximum to modify the values by
     :return HSL string of randomised colour:
     """
-    factor = random.randint(10, 100)
+    # factor = random.randint(10, 100)
     # return "rgb({},{},{})".format(random.randint(0,255), random.randint(0,255), random.randint(0,255))
     return hsl(abs(hue), abs(saturation + random.randint(factor * -1, factor)), abs(lightness + random.randint(factor * -1, factor)))
 
