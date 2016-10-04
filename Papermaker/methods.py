@@ -14,7 +14,7 @@ def __vertStrips__(minX, minY, maxX, maxY):
     p2 = (minX, 45)
     p3 = (45, minY)
 
-    while p2[1] < maxY:
+    while p2[1] < maxY + 45:
         while p1[0] < maxX:
             points.append((p1, p2, p3))
             p1 = p2
@@ -27,6 +27,7 @@ def __vertStrips__(minX, minY, maxX, maxY):
         p3 = (45, p3[1])
 
     return points
+
 
 
 def gen_squareangles(size):
