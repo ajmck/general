@@ -10,9 +10,9 @@ def gen_vertStrips(size):
 def __vertStrips__(minX, minY, maxX, maxY):
     points = []
 
-    p1 = (0, 0)
-    p2 = (0, 45)
-    p3 = (45, 0)
+    p1 = (minX, minY)
+    p2 = (minX, 45)
+    p3 = (45, minY)
 
     while p2[1] < maxY:
         while p1[0] < maxX:
@@ -22,8 +22,8 @@ def __vertStrips__(minX, minY, maxX, maxY):
             p3 = (p1[0] + 45, p1[1])
             # print p1, p2, p3
         # print "New Row"
-        p1 = (0, p1[1])
-        p2 = (0, p2[1] + 45)
+        p1 = (minX, p1[1])
+        p2 = (minX, p2[1] + 45)
         p3 = (45, p3[1])
 
     return points
@@ -37,9 +37,9 @@ def __squareangles__(minX, minY, maxX, maxY):
     points = []
     factor = 50
 
-    p1 = (0, 0)
-    p2 = (0, factor)
-    p3 = (factor, 0)
+    p1 = (minX, minY)
+    p2 = (minX, factor)
+    p3 = (factor, minY)
 
     height = factor
 
@@ -51,8 +51,8 @@ def __squareangles__(minX, minY, maxX, maxY):
             p3 = (p1[0] + factor, p1[1])
             # print p1, p2, p3
         # print "New Row"
-        p1 = (0, height)
-        p2 = (0, height + factor)
+        p1 = (minX, height)
+        p2 = (minX, height + factor)
         p3 = (factor, height)
 
         height += factor
@@ -67,12 +67,12 @@ def gen_centred(size):
 def __centred__(minX, minY, maxX, maxY):
     points = []
 
-    centroid = (random.randint(0, maxX), random.randint(0, maxY))
+    centroid = (random.randint(minX, maxX), random.randint(minY, maxY))
     horz = 0
     vert = 0
 
     N, E, S, W = False, False, False, False
-    p1 = (0, 0)
+    p1 = (minX, minY)
 
     while not (N and E and S and W):
         # # old format before refactoring (pseudocode)
@@ -105,15 +105,15 @@ def __centred__(minX, minY, maxX, maxY):
         elif not S:
             horz -= random.randint(20, 200)
 
-            if horz < 0:
-                horz = 0
+            if horz < minX:
+                horz = minX
                 S = True
                 # south done
         elif not W:
             vert -= random.randint(20, 200)
 
-            if vert < 0:
-                vert = 0
+            if vert < minY:
+                vert = minY
                 W = True
 
 
@@ -132,9 +132,9 @@ def gen_new(size):
 def __gNew__(minX, minY, maxX, maxY):
     points = []
     r = random.randint(3, 100)
-    p1 = (0, 0)
-    p2 = (0, r)
-    p3 = (r, 0)
+    p1 = (minX, minY)
+    p2 = (minX, r)
+    p3 = (r, minY)
 
     height = r
 
@@ -146,8 +146,8 @@ def __gNew__(minX, minY, maxX, maxY):
             p3 = (p1[0] + random.randint(3, 100), p1[1])
             # print p1, p2, p3
         # print "New Row"
-        p1 = (0, height)
-        p2 = (0, height + random.randint(3, 100))
+        p1 = (minX, height)
+        p2 = (minX, height + random.randint(3, 100))
         p3 = (45, height)
 
         height += random.randint(3, 100)
@@ -162,9 +162,9 @@ def gen_2(size):
 def __g2__(minX, minY, maxX, maxY):
     points = []
     x = random.randint(0, 100)
-    p1 = (0, 0)
-    p2 = (0, x)
-    p3 = (x, 0)
+    p1 = (minX, minY)
+    p2 = (minX, x)
+    p3 = (x, minY)
     p4 = (random.randint(0, 100), random.randint(0, 100))
 
     height = x
@@ -178,8 +178,8 @@ def __g2__(minX, minY, maxX, maxY):
             p4 = (p1[0] + random.randint(0, 100), p1[1])
             # print p1, p2, p3
         # print "New Row"
-        p1 = (0, height)
-        p2 = (0, height + random.randint(0, 100))
+        p1 = (minX, height)
+        p2 = (minX, height + random.randint(0, 100))
         p3 = (x, height)
         p4 = (height + random.randint(0, 100), height + random.randint(0, 100))
 
@@ -195,9 +195,9 @@ def gen_3(size):
 def __g3__(minX, minY, maxX, maxY):
     points = []
     x = random.randint(0, 100)
-    p1 = (0, 0)
-    p2 = (0, x)
-    p3 = (x, 0)
+    p1 = (minX, minY)
+    p2 = (minX, x)
+    p3 = (x, minY)
     p4 = (random.randint(0, 100), random.randint(0, 100))
 
     height = x
@@ -211,8 +211,8 @@ def __g3__(minX, minY, maxX, maxY):
             p4 = (p1[0] + random.randint(0, 100), p1[1])
             # print p1, p2, p3
         # print "New Row"
-        p1 = (0, height)
-        p2 = (0, height + random.randint(0, 100))
+        p1 = (minX, height)
+        p2 = (minX, height + random.randint(0, 100))
         p3 = (x, height)
         p4 = (height + random.randint(0, 100), height + random.randint(0, 100))
 
