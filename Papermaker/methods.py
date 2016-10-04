@@ -1,18 +1,21 @@
 import random
-size = (2560, 1600)  # width, height
 
 """ Different methods for generating random imagery """
 
 
-def gen_vertStrips():
+def gen_vertStrips(size):
+    return __vertStrips__(0, 0, size[0], size[1])
+
+
+def __vertStrips__(minX, minY, maxX, maxY):
     points = []
 
     p1 = (0, 0)
     p2 = (0, 45)
     p3 = (45, 0)
 
-    while p2[1] < size[1]:
-        while p1[0] < size[0]:
+    while p2[1] < maxY:
+        while p1[0] < maxX:
             points.append((p1, p2, p3))
             p1 = p2
             p2 = p3
@@ -26,7 +29,11 @@ def gen_vertStrips():
     return points
 
 
-def gen_squareangles():
+def gen_squareangles(size):
+    return __squareangles__(0, 0, size[0], size[1])
+
+
+def __squareangles__(minX, minY, maxX, maxY):
     points = []
     factor = 50
 
@@ -36,8 +43,8 @@ def gen_squareangles():
 
     height = factor
 
-    while height < size[1] + factor:
-        while p1[0] < size[0] + factor:
+    while height < maxY + factor:
+        while p1[0] < maxX + factor:
             points.append((p1, p2, p3))
             p1 = p2
             p2 = p3
@@ -53,10 +60,14 @@ def gen_squareangles():
     return points
 
 
-def gen_centred():
+def gen_centred(size):
+    return __centred__(0, 0, size[0], size[1])
+
+
+def __centred__(minX, minY, maxX, maxY):
     points = []
 
-    centroid = (random.randint(0, size[0]), random.randint(0, size[1]))
+    centroid = (random.randint(0, maxX), random.randint(0, maxY))
     horz = 0
     vert = 0
 
@@ -79,16 +90,16 @@ def gen_centred():
         if not N:
             horz += random.randint(20, 200)
 
-            if horz > size[0]:
-                horz = size[0]
+            if horz > maxX:
+                horz = maxX
                 N = True
                 # north done
 
         elif not E:
             vert += random.randint(20, 200)
 
-            if vert > size[1]:
-                vert = size[1]
+            if vert > maxY:
+                vert = maxY
                 E = True
                 # east done
         elif not S:
@@ -114,7 +125,11 @@ def gen_centred():
     return points
 
 
-def gen_new():
+def gen_new(size):
+    return __gNew__(0, 0, size[0], size[1])
+
+
+def __gNew__(minX, minY, maxX, maxY):
     points = []
     r = random.randint(3, 100)
     p1 = (0, 0)
@@ -123,8 +138,8 @@ def gen_new():
 
     height = r
 
-    while height < size[1]:
-        while p1[0] < size[0]:
+    while height < maxY:
+        while p1[0] < maxX:
             points.append((p1, p2, p3))
             p1 = p2
             p2 = p3
@@ -140,7 +155,11 @@ def gen_new():
     return points
 
 
-def gen_2():
+def gen_2(size):
+    return __g2__(0, 0, size[0], size[1])
+
+
+def __g2__(minX, minY, maxX, maxY):
     points = []
     x = random.randint(0, 100)
     p1 = (0, 0)
@@ -150,8 +169,8 @@ def gen_2():
 
     height = x
 
-    while height < size[1] + x:
-        while p1[0] < size[0]:
+    while height < maxY + x:
+        while p1[0] < maxX:
             points.append((p1, p2, p3, p4))
             p1 = p2
             p2 = p3
@@ -168,7 +187,12 @@ def gen_2():
 
     return points
 
-def gen_3():
+
+def gen_3(size):
+    return __g3__(0, 0, size[0], size[1])
+
+
+def __g3__(minX, minY, maxX, maxY):
     points = []
     x = random.randint(0, 100)
     p1 = (0, 0)
@@ -178,8 +202,8 @@ def gen_3():
 
     height = x
 
-    while height < size[1] + x:
-        while p1[0] < size[0]:
+    while height < maxY + x:
+        while p1[0] < maxX:
             points.append((p1, p2, p3, p4))
             p1 = p2
             p2 = p3
