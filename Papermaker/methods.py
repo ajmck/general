@@ -7,18 +7,21 @@ def gen_vertStrips(size):
     return _vertStrips_(0, 0, size[0], size[1])
 
 
-def _vertStrips_(minX, minY, maxX, maxY):
+def _vertStrips_(minX, minY, maxX, maxY, factorMin=45, factorMax=45):
     points = []
-
+    factor = random.randint(factorMin, factorMax)
     p1 = (minX, minY)
     p2 = (minX, maxY)
-    p3 = (45, minY)
+    p3 = (factor, minY)
 
-    while p1[0] < maxX:
+    while p1[0] < maxX + factor:
         points.append((p1, p2, p3))
         p1 = p2
         p2 = p3
-        p3 = (p1[0] + 45, p1[1])
+        if factorMin != factorMax:
+            p3 = (p1[0] + random.randint(factorMin, factorMax), p1[1])
+        else:
+            p3 = (p1[0] + factor, p1[1])
 
     return points
 
