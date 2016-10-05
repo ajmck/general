@@ -4,30 +4,23 @@ import random
 
 
 def gen_vertStrips(size):
-    return __vertStrips__(0, 0, size[0], size[1])
+    return _vertStrips_(0, 0, size[0], size[1])
 
 
-def __vertStrips__(minX, minY, maxX, maxY):
+def _vertStrips_(minX, minY, maxX, maxY):
     points = []
 
     p1 = (minX, minY)
-    p2 = (minX, 45)
+    p2 = (minX, maxY)
     p3 = (45, minY)
 
-    while p2[1] < maxY + 45:
-        while p1[0] < maxX:
-            points.append((p1, p2, p3))
-            p1 = p2
-            p2 = p3
-            p3 = (p1[0] + 45, p1[1])
-            # print p1, p2, p3
-        # print "New Row"
-        p1 = (minX, p1[1])
-        p2 = (minX, p2[1] + 45)
-        p3 = (45, p3[1])
+    while p1[0] < maxX:
+        points.append((p1, p2, p3))
+        p1 = p2
+        p2 = p3
+        p3 = (p1[0] + 45, p1[1])
 
     return points
-
 
 
 def gen_squareangles(size):
