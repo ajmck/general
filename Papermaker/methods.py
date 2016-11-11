@@ -32,13 +32,13 @@ def gen_squareangles(size):
 
 def __squareangles__(minX, minY, maxX, maxY):
     points = []
-    factor = 50
+    factor = 80
+    height = minY + factor
 
     p1 = (minX, minY)
-    p2 = (minX, factor)
-    p3 = (factor, minY)
+    p2 = (minX, height)
+    p3 = (minX + factor, minY)
 
-    height = factor
 
     while height < maxY + factor:
         while p1[0] < maxX + factor:
@@ -50,7 +50,7 @@ def __squareangles__(minX, minY, maxX, maxY):
         # print "New Row"
         p1 = (minX, height)
         p2 = (minX, height + factor)
-        p3 = (factor, height)
+        p3 = (minX + factor, height)
 
         height += factor
 
@@ -65,8 +65,8 @@ def __centred__(minX, minY, maxX, maxY):
     points = []
 
     centroid = (random.randint(minX, maxX), random.randint(minY, maxY))
-    horz = 0
-    vert = 0
+    horz = minX
+    vert = minY
 
     N, E, S, W = False, False, False, False
     p1 = (minX, minY)
@@ -113,8 +113,6 @@ def __centred__(minX, minY, maxX, maxY):
                 vert = minY
                 W = True
 
-
-
         p2 = (horz, vert)
         points.append((p1, p2, centroid))
         p1 = p2
@@ -122,11 +120,11 @@ def __centred__(minX, minY, maxX, maxY):
     return points
 
 
-def gen_new(size):
-    return __gNew__(0, 0, size[0], size[1])
+def gen_1(size):
+    return __g1__(0, 0, size[0], size[1])
 
 
-def __gNew__(minX, minY, maxX, maxY):
+def __g1__(minX, minY, maxX, maxY):
     points = []
     r = random.randint(3, 100)
     p1 = (minX, minY)
@@ -151,68 +149,3 @@ def __gNew__(minX, minY, maxX, maxY):
 
     return points
 
-
-def gen_2(size):
-    return __g2__(0, 0, size[0], size[1])
-
-
-def __g2__(minX, minY, maxX, maxY):
-    points = []
-    x = random.randint(0, 100)
-    p1 = (minX, minY)
-    p2 = (minX, x)
-    p3 = (x, minY)
-    p4 = (random.randint(0, 100), random.randint(0, 100))
-
-    height = x
-
-    while height < maxY + x:
-        while p1[0] < maxX:
-            points.append((p1, p2, p3, p4))
-            p1 = p2
-            p2 = p3
-            p3 = p4
-            p4 = (p1[0] + random.randint(0, 100), p1[1])
-            # print p1, p2, p3
-        # print "New Row"
-        p1 = (minX, height)
-        p2 = (minX, height + random.randint(0, 100))
-        p3 = (x, height)
-        p4 = (height + random.randint(0, 100), height + random.randint(0, 100))
-
-        height += random.randint(0, 100)
-
-    return points
-
-
-def gen_3(size):
-    return __g3__(0, 0, size[0], size[1])
-
-
-def __g3__(minX, minY, maxX, maxY):
-    points = []
-    x = random.randint(0, 100)
-    p1 = (minX, minY)
-    p2 = (minX, x)
-    p3 = (x, minY)
-    p4 = (random.randint(0, 100), random.randint(0, 100))
-
-    height = x
-
-    while height < maxY + x:
-        while p1[0] < maxX:
-            points.append((p1, p2, p3, p4))
-            p1 = p2
-            p2 = p3
-            p3 = p4
-            p4 = (p1[0] + random.randint(0, 100), p1[1])
-            # print p1, p2, p3
-        # print "New Row"
-        p1 = (minX, height)
-        p2 = (minX, height + random.randint(0, 100))
-        p3 = (x, height)
-        p4 = (height + random.randint(0, 100), height + random.randint(0, 100))
-
-        height += random.randint(0, 100)
-
-    return points
