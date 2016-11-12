@@ -1,7 +1,7 @@
 import random
+import math
 
 """ Different methods for generating random imagery """
-
 
 def gen_vertStrips(size):
     return _vertStrips_(0, 0, size[0], size[1])
@@ -149,3 +149,79 @@ def __g1__(minX, minY, maxX, maxY):
 
     return points
 
+
+
+def gen_parallelogram(size, slant=30):
+    return __parallelogram__(0, 0, size[0], size[1], factor=slant)
+
+
+def __parallelogram__(minX, minY, maxX, maxY, factor=30):
+    points = []
+    currX = minX
+    currY = minY
+    
+    while currY < maxY + factor:
+        while currX < maxX + factor:
+            p1 = (currX, currY)
+            p2 = (currX - factor, currY + factor)
+            p3 = (currX, currY + factor)
+            p4 = (currX + factor, currY)
+            points.append((p1, p2, p3, p4))
+            
+            currX += factor
+        currX = 0
+        currY += factor
+    
+    return points
+
+
+def gen_tetris(size, factor=30):
+    return __tetris__(0, 0, size[0], size[1], factor)
+
+def __tetris__(minX, minY, maxX, maxY, factor=30):
+    points = []
+    currX = minX
+    currY = minY
+    
+    while currY < (maxY + factor):
+        while currX < (maxX + factor):
+            p1 = (currX, currY)
+            p2 = (currX, currY + factor)
+            p3 = (currX - factor, currY + factor)
+            p4 = (currX - factor, currY + 2*factor)
+            p5 = (currX + factor, currY + 2*factor)
+            p6 = (currX + factor, currY + factor)
+            p7 = (currX + factor + factor, currY + factor)
+            p8 = (currX + factor + factor, currY)
+            points.append((p1, p2, p3, p4, p5, p6, p7, p8)) 
+            currX += 2 * factor
+        currX = 0
+        currY += 2 * factor
+    return points
+
+
+def gen_centredSquare(size):
+    return __centredSquare__(0, 0, size[0], size[1])
+
+
+def __centredSquare__(minX, minY, maxX, maxY, minFactor=30, maxFactor=300):
+    centroid = (random.randint(minX, maxX), random.randint(minY, maxY))
+    length = (maxX - minX) + (maxY - minY)
+    points = []
+
+    pN = (centroid[0], centroid[1] + length)
+    pE = (centroid[0] + length, centroid[1])
+    pS = (centroid[0], centroid[1] - length)
+    pW = (centroid[0] - length, centroid[1])
+    points.append((pN, pE, pS, pW))
+
+    while (length > 0):
+        factor = random.randint(minFactor, maxFactor)
+        pN = (pN[0], pN[1] - factor)
+        pS = (pS[0], pS[1] + factor)
+        pE = (pE[0] - factor, pE[1])
+        pW = (pW[0] + factor, pW[1])
+        points.append((pN, pE, pS, pW))
+        length -= factor
+    
+    return points
