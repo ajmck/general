@@ -1,5 +1,5 @@
 # Papermaker
-![Example Image](./Example.png "Example Image")
+![Example Image](./Example.PNG "Example Image")
 
 Python script to randomly generate wallpapers 
 
