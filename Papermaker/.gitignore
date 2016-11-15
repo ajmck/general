@@ -1,1 +1,17 @@
-*.pyc
+#######################
+# Papermaker .gitignore
+#######################
+
+# Output files
+Output/
+
+
+################
+# Python files #
+################
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
